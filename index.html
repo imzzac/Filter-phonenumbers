@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="title">Arabic Countries Phone Code Prefix Tool</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stats.css">
+    <link rel="stylesheet" href="preview.css">
 </head>
 <body>
     <div class="language-switcher">
@@ -30,23 +32,26 @@
         <div class="prefix-section">
             <select id="countrySelect" class="country-select">
                 <option value="" data-i18n="country.select">Select Arabic Country</option>
-                <option value="+20">🇪🇬 Egypt (+20)</option>
-                <option value="+966">🇸🇦 Saudi Arabia (+966)</option>
-                <option value="+971">🇦🇪 United Arab Emirates (+971)</option>
+                <option value="+20">🇪🇬 <span data-i18n="country.egypt">Egypt</span> (+20)</option>
+                <option value="+966">🇸🇦 <span data-i18n="country.saudi">Saudi Arabia</span> (+966)</option>
+                <option value="+971">🇦🇪 <span data-i18n="country.uae">United Arab Emirates</span> (+971)</option>
             </select>
             <button class="apply-btn">✨ <span data-i18n="buttons.applyPrefix">Apply Prefix</span></button>
         </div>
 
         <div class="stats" id="stats" style="display: none;">
             <div class="stat-card">
+                <div class="stat-icon">📊</div>
                 <div class="stat-number" id="totalRows">0</div>
                 <div data-i18n="stats.totalRows">Total Rows</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">📱</div>
                 <div class="stat-number" id="phoneColumns">0</div>
                 <div data-i18n="stats.phoneColumns">Phone Columns</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">✨</div>
                 <div class="stat-number" id="prefixedRows">0</div>
                 <div data-i18n="stats.prefixedNumbers">Prefixed Numbers</div>
             </div>

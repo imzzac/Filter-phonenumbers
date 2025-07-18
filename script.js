@@ -75,7 +75,7 @@ function parseCSV(csvText) {
         headers = data[0];
         currentData = data.slice(1);
         identifyPhoneColumns();
-        displayData();
+        displayData(false); // Don't show formatted numbers initially
         updateStats();
     }
 }
@@ -91,7 +91,7 @@ function parseExcel(arrayBuffer) {
         headers = jsonData[0];
         currentData = jsonData.slice(1);
         identifyPhoneColumns();
-        displayData();
+        displayData(false); // Don't show formatted numbers initially
         updateStats();
     }
 }
@@ -126,38 +126,31 @@ function identifyPhoneColumns() {
     });
 }
 
-function displayData() {
+function displayData(showFormatted = true) {
     const container = document.getElementById('dataContainer');
+    const statsContainer = document.getElementById('stats');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const downloadFilteredBtn = document.getElementById('downloadFilteredBtn');
     
     if (currentData.length === 0) {
-        container.innerHTML = '<div class="no-data">No data found in the file.</div>';
+        container.innerHTML = '<div class="no-data" data-i18n="noData">No data found in the file.</div>';
+        statsContainer.style.display = 'none';
+        downloadBtn.style.display = 'none';
+        downloadFilteredBtn.style.display = 'none';
         return;
     }
 
-    let html = '<table class="data-table"><thead><tr>';
-    headers.forEach((header, index) => {
-        const isPhone = phoneColumns.includes(index);
-        html += `<th style="${isPhone ? 'background: linear-gradient(45deg, #28a745, #20c997);' : ''}">${header} ${isPhone ? '📱' : ''}</th>`;
-    });
-    html += '</tr></thead><tbody>';
-
-    currentData.slice(0, 20).forEach(row => {
-        html += '<tr>';
-        row.forEach((cell, index) => {
-            const isPhone = phoneColumns.includes(index);
-            const displayCell = isPhone && cell ? `<span class="phone-highlight">${cell}</span>` : cell || '';
-            html += `<td>${displayCell}</td>`;
-        });
-        html += '</tr>';
-    });
-
-    html += '</tbody></table>';
+    // Always show stats and download buttons when we have data
+    statsContainer.style.display = 'flex';
+    downloadBtn.style.display = 'block';
+    downloadFilteredBtn.style.display = 'block';
     
-    if (currentData.length > 20) {
-        html += `<p style="text-align: center; margin-top: 15px; color: #666;">Showing first 20 rows of ${currentData.length} total rows</p>`;
+    // When first loading the file, just show success message
+    if (!showFormatted) {
+        container.innerHTML = '<div class="success-message" style="text-align: center; padding: 20px; color: #28a745;"><span>✅ File loaded successfully!</span></div>';
+        return;
     }
 
-    container.innerHTML = html;
     document.getElementById('downloadBtn').style.display = 'block';
     document.getElementById('downloadFilteredBtn').style.display = 'block';
     document.getElementById('stats').style.display = 'flex';
@@ -195,10 +188,13 @@ function applyPrefix() {
     console.log('Total rows:', currentData.length);
     
     let updatedCount = 0;
+    let changedNumbers = []; // Track changed numbers
+
     currentData.forEach((row, rowIndex) => {
         phoneColumns.forEach(colIndex => {
             if (row[colIndex]) {
                 let phoneNumber = row[colIndex].toString().trim();
+                const originalNumber = phoneNumber; // Store original number
                 console.log(`\nProcessing number: ${phoneNumber}`);
                 
                 // First, remove all non-digit characters except +
@@ -207,45 +203,82 @@ function applyPrefix() {
 
                 // Check if the number already has an international prefix
                 if (phoneNumber.startsWith('+')) {
-                    // Only modify if it's the same country code we're updating
-                    if (phoneNumber.startsWith(selectedPrefix)) {
-                        // Keep the number as is, it's already correct
-                        return;
-                    }
-                    // Skip numbers with other country codes
-                    return;
+                    console.log('Number already has prefix:', phoneNumber);
+                    return; // Skip numbers that already have a prefix
                 }
 
+                let wasUpdated = false;
                 // Use country-specific validation if available
                 const validator = countryValidators[selectedPrefix];
                 if (validator) {
                     const validatedNumber = validator(phoneNumber);
                     if (validatedNumber) {
                         row[colIndex] = validatedNumber;
-                        updatedCount++;
+                        wasUpdated = true;
                     }
                 } else if (selectedPrefix === '+971') { // UAE (legacy code - should be moved to its own module)
                     if (phoneNumber.startsWith('00971')) {
                         phoneNumber = '+971' + phoneNumber.substring(5);
-                        row[colIndex] = phoneNumber;
-                        updatedCount++;
                     } else if (phoneNumber.startsWith('0')) {
                         phoneNumber = '+971' + phoneNumber.substring(1);
-                        row[colIndex] = phoneNumber;
-                        updatedCount++;
                     } else {
-                        row[colIndex] = '+971' + phoneNumber;
-                        updatedCount++;
+                        phoneNumber = '+971' + phoneNumber;
                     }
+                    row[colIndex] = phoneNumber;
+                    wasUpdated = true;
                 }
-                // Add more country-specific patterns here by creating new country modules
+
+                if (wasUpdated) {
+                    updatedCount++;
+                    changedNumbers.push({
+                        original: originalNumber,
+                        formatted: row[colIndex]
+                    });
+                }
             }
         });
     });
 
-    displayData();
+    // Update stats first to show the current numbers
     updateStats();
-    alert(`✅ Successfully updated ${updatedCount} phone numbers with ${selectedPrefix} prefix!`);
+    document.getElementById('stats').style.display = 'flex';
+    document.getElementById('downloadBtn').style.display = 'block';
+    document.getElementById('downloadFilteredBtn').style.display = 'block';
+
+    // Show preview of changed numbers
+    const container = document.getElementById('dataContainer');
+    let previewHtml = '<div class="preview-container">';
+    
+    if (changedNumbers.length > 0) {
+        const numberToShow = Math.min(10, changedNumbers.length);
+        previewHtml += `
+            <div class="preview-title">📱 Preview of Changed Numbers (${numberToShow} of ${changedNumbers.length})</div>
+            <div class="preview-table">
+                <div class="preview-header">
+                    <div class="preview-col">Original Number</div>
+                    <div class="preview-col">Formatted Number</div>
+                </div>`;
+
+        changedNumbers.slice(0, 10).forEach(number => {
+            previewHtml += `
+                <div class="preview-row">
+                    <div class="preview-col">${number.original}</div>
+                    <div class="preview-col formatted">${number.formatted}</div>
+                </div>`;
+        });
+
+        previewHtml += '</div></div>';
+    } else {
+        previewHtml = '<div class="no-changes">No numbers were changed. They might already have the correct format.</div>';
+    }
+
+    container.innerHTML = previewHtml;
+    
+    if (updatedCount > 0) {
+        alert(`✅ Successfully updated ${updatedCount} phone numbers with ${selectedPrefix} prefix!`);
+    } else {
+        alert('No numbers were updated. They might already have the correct format.');
+    }
 }
 
 function downloadData() {

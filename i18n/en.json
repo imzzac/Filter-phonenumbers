@@ -6,7 +6,10 @@
     "chooseFile": "Choose File"
   },
   "country": {
-    "select": "Select Arabic Country"
+    "select": "Select Arabic Country",
+    "egypt": "Egypt",
+    "saudi": "Saudi Arabia",
+    "uae": "United Arab Emirates"
   },
   "buttons": {
     "applyPrefix": "Apply Prefix",
