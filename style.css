@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    direction: ltr;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.upload-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 15px;
+    border: 2px dashed #667eea;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.upload-section:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+.file-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-input-button {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-input-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.prefix-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.country-select {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.country-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.apply-btn {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.data-table th,
+.data-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.data-table th {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    font-weight: 600;
+}
+
+.data-table tr:hover {
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.download-btn {
+    background: linear-gradient(45deg, #17a2b8, #6610f2);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    flex: 1;
+    min-width: 150px;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+}
+
+.stat-number {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.no-data {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 40px;
+}
+
+.phone-highlight {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .prefix-section {
+        flex-direction: column;
+    }
+    
+    .country-select {
+        width: 100%;
+    }
+}

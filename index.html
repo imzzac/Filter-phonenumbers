@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Countries Phone Code Prefix Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Arabic Countries Phone Code Prefix Tool</h1>
+        
+        <div class="upload-section">
+            <h3>📊 Upload Your Data</h3>
+            <p>Upload an Excel file or CSV with phone numbers to add country prefixes</p>
+            <div class="file-input-wrapper">
+                <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls,.csv">
+                <button class="file-input-button">
+                    📁 Choose File
+                </button>
+            </div>
+            <div id="fileName" style="margin-top: 10px; font-style: italic;"></div>
+        </div>
+
+        <div class="prefix-section">
+            <select id="countrySelect" class="country-select">
+                <option value="">Select Arabic Country</option>
+                <option value="+966">🇸🇦 Saudi Arabia (+966)</option>
+                <option value="+971">🇦🇪 United Arab Emirates (+971)</option>
+                <option value="+974">🇶🇦 Qatar (+974)</option>
+                <option value="+965">🇰🇼 Kuwait (+965)</option>
+                <option value="+973">🇧🇭 Bahrain (+973)</option>
+                <option value="+968">🇴🇲 Oman (+968)</option>
+                <option value="+962">🇯🇴 Jordan (+962)</option>
+                <option value="+961">🇱🇧 Lebanon (+961)</option>
+                <option value="+963">🇸🇾 Syria (+963)</option>
+                <option value="+964">🇮🇶 Iraq (+964)</option>
+                <option value="+967">🇾🇪 Yemen (+967)</option>
+                <option value="+20">🇪🇬 Egypt (+20)</option>
+                <option value="+218">🇱🇾 Libya (+218)</option>
+                <option value="+216">🇹🇳 Tunisia (+216)</option>
+                <option value="+213">🇩🇿 Algeria (+213)</option>
+                <option value="+212">🇲🇦 Morocco (+212)</option>
+                <option value="+249">🇸🇩 Sudan (+249)</option>
+                <option value="+252">🇸🇴 Somalia (+252)</option>
+                <option value="+253">🇩🇯 Djibouti (+253)</option>
+                <option value="+222">🇲🇷 Mauritania (+222)</option>
+                <option value="+269">🇰🇲 Comoros (+269)</option>
+            </select>
+            <button class="apply-btn">✨ Apply Prefix</button>
+        </div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-number" id="totalRows">0</div>
+                <div>Total Rows</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="phoneColumns">0</div>
+                <div>Phone Columns</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="prefixedRows">0</div>
+                <div>Prefixed Numbers</div>
+            </div>
+        </div>
+
+        <div id="dataContainer">
+            <div class="no-data">
+                📋 No data uploaded yet. Please upload an Excel or CSV file to get started.
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button class="download-btn" id="downloadBtn" style="display: none;">
+                💾 Download All Data
+            </button>
+            <button class="download-btn" id="downloadFilteredBtn" style="display: none; background: linear-gradient(45deg, #28a745, #20c997);">
+                📱 Download Only Formatted Numbers
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="countries/egypt.js" type="module"></script>
+    <script src="countries/saudi.js" type="module"></script>
+    <script src="countries/uae.js" type="module"></script>
+    <script src="script.js" type="module"></script>
+</body>
+</html>
