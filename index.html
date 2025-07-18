@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arabic Countries Phone Code Prefix Tool</title>
+    <title data-i18n="title">Arabic Countries Phone Code Prefix Tool</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="language-switcher">
+        <button id="langToggle" class="lang-btn">
+            🌐 <span id="currentLang">English</span>
+        </button>
+    </div>
     <div class="container">
-        <h1>🌍 Arabic Countries Phone Code Prefix Tool</h1>
+        <h1>🌍 <span data-i18n="title">Arabic Countries Phone Code Prefix Tool</span></h1>
         
         <div class="upload-section">
-            <h3>📊 Upload Your Data</h3>
-            <p>Upload an Excel file or CSV with phone numbers to add country prefixes</p>
+            <h3>📊 <span data-i18n="upload.title">Upload Your Data</span></h3>
+            <p data-i18n="upload.description">Upload an Excel file or CSV with phone numbers to add country prefixes</p>
             <div class="file-input-wrapper">
                 <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls,.csv">
                 <button class="file-input-button">
-                    📁 Choose File
+                    📁 <span data-i18n="upload.chooseFile">Choose File</span>
                 </button>
             </div>
             <div id="fileName" style="margin-top: 10px; font-style: italic;"></div>
@@ -24,59 +29,41 @@
 
         <div class="prefix-section">
             <select id="countrySelect" class="country-select">
-                <option value="">Select Arabic Country</option>
+                <option value="" data-i18n="country.select">Select Arabic Country</option>
+                <option value="+20">🇪🇬 Egypt (+20)</option>
                 <option value="+966">🇸🇦 Saudi Arabia (+966)</option>
                 <option value="+971">🇦🇪 United Arab Emirates (+971)</option>
-                <option value="+974">🇶🇦 Qatar (+974)</option>
-                <option value="+965">🇰🇼 Kuwait (+965)</option>
-                <option value="+973">🇧🇭 Bahrain (+973)</option>
-                <option value="+968">🇴🇲 Oman (+968)</option>
-                <option value="+962">🇯🇴 Jordan (+962)</option>
-                <option value="+961">🇱🇧 Lebanon (+961)</option>
-                <option value="+963">🇸🇾 Syria (+963)</option>
-                <option value="+964">🇮🇶 Iraq (+964)</option>
-                <option value="+967">🇾🇪 Yemen (+967)</option>
-                <option value="+20">🇪🇬 Egypt (+20)</option>
-                <option value="+218">🇱🇾 Libya (+218)</option>
-                <option value="+216">🇹🇳 Tunisia (+216)</option>
-                <option value="+213">🇩🇿 Algeria (+213)</option>
-                <option value="+212">🇲🇦 Morocco (+212)</option>
-                <option value="+249">🇸🇩 Sudan (+249)</option>
-                <option value="+252">🇸🇴 Somalia (+252)</option>
-                <option value="+253">🇩🇯 Djibouti (+253)</option>
-                <option value="+222">🇲🇷 Mauritania (+222)</option>
-                <option value="+269">🇰🇲 Comoros (+269)</option>
             </select>
-            <button class="apply-btn">✨ Apply Prefix</button>
+            <button class="apply-btn">✨ <span data-i18n="buttons.applyPrefix">Apply Prefix</span></button>
         </div>
 
         <div class="stats" id="stats" style="display: none;">
             <div class="stat-card">
                 <div class="stat-number" id="totalRows">0</div>
-                <div>Total Rows</div>
+                <div data-i18n="stats.totalRows">Total Rows</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number" id="phoneColumns">0</div>
-                <div>Phone Columns</div>
+                <div data-i18n="stats.phoneColumns">Phone Columns</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number" id="prefixedRows">0</div>
-                <div>Prefixed Numbers</div>
+                <div data-i18n="stats.prefixedNumbers">Prefixed Numbers</div>
             </div>
         </div>
 
         <div id="dataContainer">
-            <div class="no-data">
+            <div class="no-data" data-i18n="noData">
                 📋 No data uploaded yet. Please upload an Excel or CSV file to get started.
             </div>
         </div>
 
         <div style="display: flex; gap: 15px; justify-content: center;">
             <button class="download-btn" id="downloadBtn" style="display: none;">
-                💾 Download All Data
+                💾 <span data-i18n="buttons.downloadAll">Download All Data</span>
             </button>
             <button class="download-btn" id="downloadFilteredBtn" style="display: none; background: linear-gradient(45deg, #28a745, #20c997);">
-                📱 Download Only Formatted Numbers
+                📱 <span data-i18n="buttons.downloadFormatted">Download Only Formatted Numbers</span>
             </button>
         </div>
     </div>

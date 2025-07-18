@@ -1,5 +1,19 @@
 import { validateEgyptNumber, countryCode as egyptCode } from './countries/egypt.js';
 import { validateSaudiNumber, countryCode as saudiCode } from './countries/saudi.js';
+import { i18n } from './i18n/i18n.js';
+
+// Initialize language switcher
+const langToggle = document.getElementById('langToggle');
+const currentLangSpan = document.getElementById('currentLang');
+
+langToggle.addEventListener('click', () => {
+    const newLang = i18n.currentLang === 'en' ? 'ar' : 'en';
+    i18n.setLanguage(newLang);
+    currentLangSpan.textContent = newLang === 'en' ? 'English' : 'العربية';
+});
+
+// Update initial language display
+currentLangSpan.textContent = i18n.currentLang === 'en' ? 'English' : 'العربية';
 
 // Map country codes to their validation functions
 const countryValidators = {

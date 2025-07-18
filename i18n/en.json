@@ -1,0 +1,22 @@
+{
+  "title": "Arabic Countries Phone Code Prefix Tool",
+  "upload": {
+    "title": "Upload Your Data",
+    "description": "Upload an Excel file or CSV with phone numbers to add country prefixes",
+    "chooseFile": "Choose File"
+  },
+  "country": {
+    "select": "Select Arabic Country"
+  },
+  "buttons": {
+    "applyPrefix": "Apply Prefix",
+    "downloadAll": "Download All Data",
+    "downloadFormatted": "Download Only Formatted Numbers"
+  },
+  "stats": {
+    "totalRows": "Total Rows",
+    "phoneColumns": "Phone Columns",
+    "prefixedNumbers": "Prefixed Numbers"
+  },
+  "noData": "No data uploaded yet. Please upload an Excel or CSV file to get started."
+}

@@ -1,0 +1,25 @@
+<div class="prefix-section">
+            <select id="countrySelect" class="country-select">
+                <option value="" data-i18n="country.select">Select Arabic Country</option>
+                <option value="+966">🇸🇦 Saudi Arabia (+966)</option>
+                <option value="+971">🇦🇪 United Arab Emirates (+971)</option>
+                <option value="+974">🇶🇦 Qatar (+974)</option>
+                <option value="+965">🇰🇼 Kuwait (+965)</option>
+                <option value="+973">🇧🇭 Bahrain (+973)</option>
+                <option value="+968">🇴🇲 Oman (+968)</option>
+                <option value="+962">🇯🇴 Jordan (+962)</option>
+                <option value="+961">🇱🇧 Lebanon (+961)</option>
+                <option value="+963">🇸🇾 Syria (+963)</option>
+                <option value="+964">🇮🇶 Iraq (+964)</option>
+                <option value="+967">🇾🇪 Yemen (+967)</option>
+                <option value="+20">🇪🇬 Egypt (+20)</option>
+                <option value="+218">🇱🇾 Libya (+218)</option>
+                <option value="+216">🇹🇳 Tunisia (+216)</option>
+                <option value="+213">🇩🇿 Algeria (+213)</option>
+                <option value="+212">🇲🇦 Morocco (+212)</option>
+                <option value="+249">🇸🇩 Sudan (+249)</option>
+                <option value="+252">🇸🇴 Somalia (+252)</option>
+                <option value="+253">🇩🇯 Djibouti (+253)</option>
+                <option value="+222">🇲🇷 Mauritania (+222)</option>
+                <option value="+269">🇰🇲 Comoros (+269)</option>
+            </select>

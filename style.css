@@ -1,3 +1,54 @@
+/* Language Switcher */
+.language-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+html[dir="rtl"] .language-switcher {
+    left: 20px;
+    right: auto;
+}
+
+.lang-btn {
+    background: linear-gradient(45deg, #2196F3, #21CBF3);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s;
+}
+
+.lang-btn:hover {
+    transform: scale(1.05);
+}
+
+/* RTL Support */
+html[dir="rtl"] {
+    text-align: right;
+}
+
+html[dir="rtl"] .prefix-section,
+html[dir="rtl"] .upload-section,
+html[dir="rtl"] .stats {
+    direction: rtl;
+}
+
+html[dir="rtl"] .file-input-button,
+html[dir="rtl"] .apply-btn,
+html[dir="rtl"] .download-btn {
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+/* Keep emojis in their original direction */
+html[dir="rtl"] [data-i18n] {
+    unicode-bidi: embed;
+}
+
 * {
     margin: 0;
     padding: 0;
