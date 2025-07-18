@@ -17,7 +17,7 @@
     "downloadFormatted": "Download Only Formatted Numbers"
   },
   "stats": {
-    "totalRows": "Total Rows",
+    "totalRows": "Total Numbers",
     "phoneColumns": "Phone Columns",
     "prefixedNumbers": "Prefixed Numbers"
   },
