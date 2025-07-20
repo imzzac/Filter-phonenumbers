@@ -9,11 +9,11 @@ const currentLangSpan = document.getElementById('currentLang');
 langToggle.addEventListener('click', () => {
     const newLang = i18n.currentLang === 'en' ? 'ar' : 'en';
     i18n.setLanguage(newLang);
-    currentLangSpan.textContent = newLang === 'en' ? 'English' : 'العربية';
+    currentLangSpan.textContent = newLang === 'en' ? '🇺🇸' : '🇪🇬';
 });
 
 // Update initial language display
-currentLangSpan.textContent = i18n.currentLang === 'en' ? 'English' : 'العربية';
+currentLangSpan.textContent = i18n.currentLang === 'en' ? '🇺🇸' : '🇪🇬';
 
 // Map country codes to their validation functions
 const countryValidators = {
@@ -62,18 +62,27 @@ function handleFileUpload(event) {
 function parseCSV(csvText) {
     const lines = csvText.split('\n');
     const data = [];
-    
+
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
         if (line) {
             const row = line.split(',').map(cell => cell.trim().replace(/"/g, ''));
-            data.push(row);
+            // Skip row if all cells are non-numeric (likely header)
+            const hasNumber = row.some(cell => /\d{6,}/.test(cell));
+            if (hasNumber) {
+                data.push(row);
+            }
         }
     }
-    
+
     if (data.length > 0) {
-        headers = data[0];
-        currentData = data.slice(1);
+        // If first row is header (contains no numbers), skip it
+        const firstRowIsHeader = data[0].every(cell => !/\d{6,}/.test(cell));
+        if (firstRowIsHeader) {
+            data.shift();
+        }
+        headers = [];
+        currentData = data;
         identifyPhoneColumns();
         displayData(false); // Don't show formatted numbers initially
         updateStats();

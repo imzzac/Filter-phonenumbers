@@ -6,20 +6,19 @@
     z-index: 1000;
 }
 
-html[dir="rtl"] .language-switcher {
-    left: 20px;
-    right: auto;
-}
+
 
 .lang-btn {
-    background: linear-gradient(45deg, #2196F3, #21CBF3);
-    border: none;
+    background: white;
+    border: 1px solid #e0e0e0;
     border-radius: 20px;
-    color: white;
+    color: #2196F3;
     padding: 8px 16px;
     cursor: pointer;
     font-size: 16px;
     transition: transform 0.2s;
+    box-shadow: none;
+    opacity: 0.95;
 }
 
 .lang-btn:hover {
