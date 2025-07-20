@@ -1,40 +1,51 @@
+/* Preview styling with elegant warm color palette */
 .preview-container {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    padding: 20px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(35, 31, 32, 0.08);
+    border: 1px solid #ededed;
+    padding: 25px;
     margin: 20px 0;
 }
 
 .preview-title {
     text-align: center;
-    font-size: 1.2em;
-    color: #2196F3;
-    margin-bottom: 20px;
-    font-weight: bold;
+    font-size: 1.3em;
+    color: #231f20;
+    margin-bottom: 25px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #231f20, #bd9e78);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .preview-table {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #eee;
+    border: 1px solid #ededed;
+    box-shadow: 0 4px 12px rgba(35, 31, 32, 0.05);
 }
 
 .preview-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: linear-gradient(45deg, #2196F3, #21CBF3);
-    color: white;
-    font-weight: bold;
-    padding: 12px;
+    background: linear-gradient(45deg, #231f20, #bd9e78);
+    color: #ffffff !important;
+    font-weight: 600;
+    padding: 15px;
+}
+
+.preview-header .preview-col {
+    color: #ffffff !important;
 }
 
 .preview-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s;
+    border-bottom: 1px solid #ededed;
+    transition: all 0.2s;
 }
 
 .preview-row:last-child {
@@ -42,17 +53,20 @@
 }
 
 .preview-row:hover {
-    background-color: #f8f9fa;
+    background-color: #fafafa;
+    box-shadow: inset 0 0 0 1px rgba(189, 158, 120, 0.1);
 }
 
 .preview-col {
-    padding: 12px;
+    padding: 15px;
     text-align: center;
+    color: #231f20;
 }
 
 .preview-col.formatted {
-    color: #28a745;
-    font-weight: bold;
+    color: #10b981;
+    font-weight: 600;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
 }
 
 /* Animation for when numbers are formatted */
@@ -61,13 +75,13 @@
         background-color: transparent;
     }
     50% {
-        background-color: rgba(40, 167, 69, 0.1);
+        background-color: rgba(16, 185, 129, 0.1);
     }
     100% {
-        background-color: transparent;
+        background-color: rgba(16, 185, 129, 0.05);
     }
 }
 
 .preview-col.formatted {
-    animation: highlight 1s ease-in-out;
+    animation: highlight 1.2s ease-in-out;
 }

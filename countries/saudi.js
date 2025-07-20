@@ -1,37 +1,59 @@
 // Saudi Arabia country code constant
 export const countryCode = '+966';
 
+// Known valid Saudi mobile prefixes by carrier
+const validSaudiPrefixes = [
+    '050', '053', '055', // STC
+    '054', '056',        // Mobily
+    '058', '059'         // Zain
+];
+
 /**
- * Validates and formats a Saudi Arabian phone number.
- * Valid Saudi mobile numbers start with '05' and have 10 digits in total,
- * or start with '5' and have 9 digits in total.
- * @param {string} number - The phone number to validate and format
- * @returns {string|null} The formatted number with country code or null if invalid
+ * Formats Saudi Arabian phone numbers according to the following rules:
+ * 1. Returns as-is if starts with +966 and matches valid mobile pattern
+ * 2. Converts local numbers (starting with 05) to +966 format
+ * 3. If starts with 5 and is 9 digits long, adds 0 and converts to +966 format
+ * 4. If starts with 9665 and is followed by 8 digits, adds + and returns
+ * 5. Returns null if not a valid Saudi mobile number
+ * @param {string} number - The phone number to format
+ * @returns {string|null} The formatted number or null if invalid
  */
 export function validateSaudiNumber(number) {
-    // Remove any non-digit characters except +
+    // Remove all non-digit characters except +
     number = number.replace(/[^\d+]/g, '');
-    
-    // If number already has country code in international format, validate and return it
-    if (number.startsWith('+966')) {
-        // Check if it matches Saudi mobile number format after the country code
-        if (/^\+966(5\d{8})$/.test(number)) {
+
+    // 1. Already in +966 format and valid prefix
+    if (/^\+9665\d{8}$/.test(number)) {
+        const prefix = number.slice(4, 7);
+        if (validSaudiPrefixes.includes('0' + prefix)) {
             return number;
         }
-        return null;
     }
 
-    // Handle local format starting with 05
-    if (number.startsWith('05')) {
-        number = number.substring(1); // Remove the 0, keep the 5
+    // 2. Local Saudi format starting with 05XXXXXXXX
+    if (/^05\d{8}$/.test(number)) {
+        const prefix = number.slice(0, 3);
+        if (validSaudiPrefixes.includes(prefix)) {
+            return '+966' + number.slice(1);
+        }
     }
-    
-    // For Saudi numbers:
-    // - Must start with 5
-    // - Must be 9 digits in total after removing prefix
+
+    // 3. Missing 0, starts with 5XXXXXXXX
     if (/^5\d{8}$/.test(number)) {
-        return '+966' + number;
+        const prefix = '0' + number.slice(0, 2);
+        if (validSaudiPrefixes.includes(prefix)) {
+            return '+966' + number;
+        }
     }
-    
+
+    // 4. Missing +, starts with 9665XXXXXXXX
+    if (/^9665\d{8}$/.test(number)) {
+        const prefix = '0' + number.slice(3, 5);
+        if (validSaudiPrefixes.includes(prefix)) {
+            return '+' + number;
+        }
+    }
+
+    // 5. Not a valid Saudi mobile number
     return null;
 }

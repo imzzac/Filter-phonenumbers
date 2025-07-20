@@ -1,3 +1,4 @@
+/* Stats styling with elegant warm color palette */
 .stats {
     display: flex;
     justify-content: space-around;
@@ -7,57 +8,63 @@
 
 .stat-card {
     text-align: center;
-    padding: 20px;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 25px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #fff 0%, #ededed 100%);
+    border: 1px solid #ededed;
+    box-shadow: 0 4px 12px rgba(35, 31, 32, 0.06);
     flex: 1;
     margin: 0 10px;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .stat-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(35, 31, 32, 0.12);
+    border-color: #bd9e78;
 }
 
 .stat-icon {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #bd9e78;
 }
 
 .stat-number {
-    font-size: 36px;
-    font-weight: bold;
-    margin: 10px 0;
-    background: linear-gradient(45deg, #2196F3, #21CBF3);
+    font-size: 42px;
+    font-weight: 700;
+    margin: 15px 0;
+    background: linear-gradient(45deg, #231f20, #bd9e78);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    background-clip: text;
 }
 
 .stat-card div:last-child {
-    color: #666;
+    color: #231f20;
     font-size: 14px;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .success-message, .no-changes {
-    background-color: #f8fff8;
-    border: 1px solid #28a745;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 1px solid #10b981;
+    border-radius: 12px;
     padding: 20px;
     margin: 20px 0;
     text-align: center;
-    color: #28a745;
+    color: #065f46;
     font-size: 18px;
+    font-weight: 600;
     animation: fadeIn 0.5s ease-in;
 }
 
 .no-changes {
-    background-color: #fff8f8;
-    border-color: #ffc107;
-    color: #856404;
+    background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+    border-color: #bd9e78;
+    color: #231f20;
 }
 
 @keyframes fadeIn {

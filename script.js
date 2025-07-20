@@ -1,5 +1,9 @@
-import { validateEgyptNumber, countryCode as egyptCode } from './countries/egypt.js';
-import { validateSaudiNumber, countryCode as saudiCode } from './countries/saudi.js';
+import { 
+    validateEgyptNumber, egyptCode,
+    validateSaudiNumber, saudiCode,
+    validateUAENumber, uaeCode,
+    validateQatarNumber, qatarCode
+} from './countries/index.js';
 import { i18n } from './i18n/i18n.js';
 
 // Initialize language switcher
@@ -18,12 +22,65 @@ currentLangSpan.textContent = i18n.currentLang === 'en' ? '🇺🇸' : '🇪🇬
 // Map country codes to their validation functions
 const countryValidators = {
     [egyptCode]: validateEgyptNumber,
-    [saudiCode]: validateSaudiNumber
+    [saudiCode]: validateSaudiNumber,
+    [uaeCode]: validateUAENumber,
+    [qatarCode]: validateQatarNumber
 };
 
 let currentData = [];
 let headers = [];
 let phoneColumns = [];
+
+// Message card system
+function showMessage(message, type = 'info') {
+    const container = document.getElementById('dataContainer');
+    
+    // For warnings, remove existing warning messages to replace with new one
+    if (type === 'warning') {
+        const existingWarnings = container.querySelectorAll('.message-warning');
+        existingWarnings.forEach(warning => warning.remove());
+    }
+    
+    // Check if this exact message is already displayed
+    const existingMessages = container.querySelectorAll('.message-card');
+    for (let existingMsg of existingMessages) {
+        const existingText = existingMsg.querySelector('.message-text').textContent;
+        const existingType = existingMsg.classList.contains(`message-${type}`);
+        
+        if (existingText === message && existingType) {
+            // Message already exists, don't show duplicate
+            return;
+        }
+    }
+    
+    const messageCard = document.createElement('div');
+    messageCard.className = `message-card message-${type}`;
+    
+    const messageIcon = {
+        'success': '✅',
+        'error': '❌',
+        'warning': '⚠️',
+        'info': 'ℹ️'
+    };
+    
+    messageCard.innerHTML = `
+        <div class="message-icon">${messageIcon[type] || messageIcon.info}</div>
+        <div class="message-text">${message}</div>
+        <button class="message-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    
+    // Insert at the top of the container
+    container.insertBefore(messageCard, container.firstChild);
+    
+    // Auto-remove after 5 seconds for success messages
+    if (type === 'success') {
+        setTimeout(() => {
+            if (messageCard.parentElement) {
+                messageCard.remove();
+            }
+        }, 5000);
+    }
+}
 
 // Initialize event listeners when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -48,7 +105,7 @@ function handleFileUpload(event) {
                 parseExcel(e.target.result);
             }
         } catch (error) {
-            alert('Error reading file: ' + error.message);
+            showMessage('Error reading file: ' + error.message, 'error');
         }
     };
     
@@ -166,7 +223,16 @@ function displayData(showFormatted = true) {
 }
 
 function updateStats() {
-    document.getElementById('totalRows').textContent = currentData.length;
+    // Count total phone numbers (not just rows)
+    let totalNumbers = 0;
+    currentData.forEach(row => {
+        phoneColumns.forEach(colIndex => {
+            if (row[colIndex] && row[colIndex].toString().trim()) {
+                totalNumbers++;
+            }
+        });
+    });
+    document.getElementById('totalRows').textContent = totalNumbers;
     document.getElementById('phoneColumns').textContent = phoneColumns.length;
     
     let prefixedCount = 0;
@@ -182,13 +248,16 @@ function updateStats() {
 
 function applyPrefix() {
     const selectedPrefix = document.getElementById('countrySelect').value;
-    if (!selectedPrefix) {
-        alert('Please select a country first!');
+    const hasData = currentData.length > 0;
+    
+    if (!selectedPrefix && !hasData) {
+        showMessage('Please upload data and select a country first!', 'warning');
         return;
-    }
-
-    if (currentData.length === 0) {
-        alert('Please upload data first!');
+    } else if (!hasData) {
+        showMessage('Please upload data first!', 'warning');
+        return;
+    } else if (!selectedPrefix) {
+        showMessage('Please select a country first!', 'warning');
         return;
     }
 
@@ -225,16 +294,6 @@ function applyPrefix() {
                         row[colIndex] = validatedNumber;
                         wasUpdated = true;
                     }
-                } else if (selectedPrefix === '+971') { // UAE (legacy code - should be moved to its own module)
-                    if (phoneNumber.startsWith('00971')) {
-                        phoneNumber = '+971' + phoneNumber.substring(5);
-                    } else if (phoneNumber.startsWith('0')) {
-                        phoneNumber = '+971' + phoneNumber.substring(1);
-                    } else {
-                        phoneNumber = '+971' + phoneNumber;
-                    }
-                    row[colIndex] = phoneNumber;
-                    wasUpdated = true;
                 }
 
                 if (wasUpdated) {
@@ -284,15 +343,15 @@ function applyPrefix() {
     container.innerHTML = previewHtml;
     
     if (updatedCount > 0) {
-        alert(`✅ Successfully updated ${updatedCount} phone numbers with ${selectedPrefix} prefix!`);
+        showMessage(`Successfully updated ${updatedCount} phone numbers with ${selectedPrefix} prefix!`, 'success');
     } else {
-        alert('No numbers were updated. They might already have the correct format.');
+        showMessage('No numbers were updated. They might already have the correct format.', 'info');
     }
 }
 
 function downloadData() {
     if (currentData.length === 0) {
-        alert('No data to download!');
+        showMessage('No data to download!', 'warning');
         return;
     }
 
@@ -306,7 +365,7 @@ function downloadData() {
 
 function downloadFilteredData() {
     if (currentData.length === 0) {
-        alert('No data to download!');
+        showMessage('No data to download!', 'warning');
         return;
     }
 
@@ -318,7 +377,7 @@ function downloadFilteredData() {
     });
 
     if (filteredData.length === 0) {
-        alert('No formatted numbers found!');
+        showMessage('No formatted numbers found!', 'info');
         return;
     }
 

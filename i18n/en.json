@@ -9,7 +9,8 @@
     "select": "Select Arabic Country",
     "egypt": "Egypt",
     "saudi": "Saudi Arabia",
-    "uae": "United Arab Emirates"
+    "uae": "United Arab Emirates",
+    "qatar": "Qatar"
   },
   "buttons": {
     "applyPrefix": "Apply Prefix",
